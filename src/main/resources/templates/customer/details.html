@@ -1,0 +1,122 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Customer Details</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-light">
+    <div class="container py-4">
+      <div class="row g-3">
+        <!-- Customer Info -->
+        <div class="col-lg-8">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h3 th:text="${customer.name}"></h3>
+
+              <hr />
+
+              <p class="mb-2">
+                <strong>Mobile:</strong>
+                <span th:text="${customer.mobile}"></span>
+              </p>
+
+              <p class="mb-0">
+                <strong>Address:</strong>
+                <span th:text="${customer.address}"></span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Balance Card -->
+        <div class="col-lg-4">
+          <div class="card shadow-sm border-success">
+            <div class="card-body text-center">
+              <h6>Current Balance</h6>
+
+              <h2
+                th:class="${balance.signum() < 0}
+              ? 'text-danger'
+              : 'text-success'"
+                th:text="'₹ ' + ${balance}"
+              ></h2>
+
+              <a
+                class="btn btn-primary w-100 mt-3"
+                th:href="@{/customers/{id}/entries/new(id=${customer.id})}"
+              >
+                Add Entry
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Entries -->
+
+      <div class="card shadow-sm mt-4">
+        <div class="card-header">Ledger Entries</div>
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead class="table-dark">
+                <tr>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Description</th>
+                  <th>Balance</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr th:each="entry : ${entries}">
+                  <td th:text="${entry.entryDate}"></td>
+
+                  <td>
+                    <span
+                      th:if="${entry.type.name() == 'GIVEN'}"
+                      class="badge bg-danger"
+                    >
+                      GIVEN
+                    </span>
+
+                    <span
+                      th:if="${entry.type.name() == 'RECEIVED'}"
+                      class="badge bg-success"
+                    >
+                      RECEIVED
+                    </span>
+                  </td>
+
+                  <td th:text="${entry.amount}"></td>
+
+                  <td th:text="${entry.description}"></td>
+
+                  <td>
+                    
+                    <span
+                      th:class="${entry.balance.signum() < 0}
+                  ? 'text-danger fw-bold'
+                  : 'text-success fw-bold'"
+                      th:text="${entry.balance}"
+                    >
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
