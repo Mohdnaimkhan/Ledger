@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.naim.ledger.entity.Customer;
 import com.naim.ledger.service.CustomerService;
 import com.naim.ledger.service.LedgerEntryService;
+import com.naim.ledger.service.SettingsServices;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,86 +21,88 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/customers")
 public class CustomerController {
 
-    private final CustomerService customerService;
+        private final CustomerService customerService;
 
-    private final LedgerEntryService ledgerEntryService;
+        private final LedgerEntryService ledgerEntryService;
 
-    @GetMapping
-    public String list(Model model) {
 
-        model.addAttribute("customers", customerService.getAllCustomers());
+        @GetMapping
+        public String list(Model model) {
 
-        return "customer/list";
-    }
+                model.addAttribute("customers", customerService.getAllCustomers());
 
-    @GetMapping("/new")
-    public String newCustomer(Model model) {
+                return "customer/list";
+        }
 
-        model.addAttribute(
-                "customer",
-                new Customer());
+        @GetMapping("/new")
+        public String newCustomer(Model model) {
 
-        return "customer/form";
-    }
+                model.addAttribute(
+                                "customer",
+                                new Customer());
 
-    @PostMapping("/save")
-    public String save(@ModelAttribute Customer customer) {
+                return "customer/form";
+        }
 
-        customerService.save(customer);
+        @PostMapping("/save")
+        public String save(@ModelAttribute Customer customer) {
 
-        return "redirect:/customers";
-    }
+                customerService.save(customer);
 
-    // Details page for a customer
-    @GetMapping("/{id}")
-    public String details(
-            @PathVariable Long id,
-            Model model,
-            @RequestParam(required = false) String keyword) {
+                return "redirect:/customers";
+        }
 
-        Customer customer = customerService.getById(id);
+        // Details page for a customer
+        @GetMapping("/{id}")
+        public String details(
+                        @PathVariable Long id,
+                        Model model,
+                        @RequestParam(required = false) String keyword) {
 
-        model.addAttribute("customer", customer);
+                Customer customer = customerService.getById(id);
 
-        model.addAttribute(
-                "entries",
-                ledgerEntryService.getEntryViews(id));
-        model.addAttribute(
-                "balance",
-                ledgerEntryService.calculateBalance(id));
-        model.addAttribute(
-                "totalEntries",
-                ledgerEntryService.getTotalEntries(id));
-        model.addAttribute(
-                "todayEntries",
-                ledgerEntryService.getTodayEntries(id));
-        model.addAttribute(
-                "entries",
-                ledgerEntryService.searchEntries(
-                        id,
-                        keyword));
+                model.addAttribute("customer", customer);
 
-        return "customer/details";
-    }
+                model.addAttribute(
+                                "entries",
+                                ledgerEntryService.getEntryViews(id));
+                model.addAttribute(
+                                "balance",
+                                ledgerEntryService.calculateBalance(id));
+                model.addAttribute(
+                                "totalEntries",
+                                ledgerEntryService.getTotalEntries(id));
+                model.addAttribute(
+                                "todayEntries",
+                                ledgerEntryService.getTodayEntries(id));
+                model.addAttribute(
+                                "entries",
+                                ledgerEntryService.searchEntries(
+                                                id,
+                                                keyword));
+        
 
-    @GetMapping("/edit/{id}")
-    public String editCustomer(
-            @PathVariable Long id,
-            Model model) {
+                return "customer/details";
+        }
 
-        Customer customer = customerService.getById(id);
+        @GetMapping("/edit/{id}")
+        public String editCustomer(
+                        @PathVariable Long id,
+                        Model model) {
 
-        model.addAttribute("customer", customer);
+                Customer customer = customerService.getById(id);
 
-        return "customer/form";
-    }
+                model.addAttribute("customer", customer);
 
-    @GetMapping("/delete/{id}")
-    public String deleteCustomer(
-            @PathVariable Long id) {
+                return "customer/form";
+        }
 
-        customerService.deleteById(id);
+        @GetMapping("/delete/{id}")
+        public String deleteCustomer(
+                        @PathVariable Long id) {
 
-        return "redirect:/customers";
-    }
+                customerService.deleteById(id);
+
+                return "redirect:/customers";
+        }
 }

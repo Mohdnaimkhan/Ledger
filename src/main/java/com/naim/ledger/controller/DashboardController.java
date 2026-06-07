@@ -2,6 +2,8 @@ package com.naim.ledger.controller;
 
 import com.naim.ledger.service.CustomerService;
 import com.naim.ledger.service.LedgerEntryService;
+import com.naim.ledger.service.SettingsServices;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ public class DashboardController {
 
         private final CustomerService customerService;
         private final LedgerEntryService ledgerEntryService;
+        private final SettingsServices setteingsServices;
 
         @GetMapping("/")
         public String dashboard(Model model) {
@@ -35,6 +38,7 @@ public class DashboardController {
                 model.addAttribute(
                                 "recentEntries",
                                 ledgerEntryService.getRecentEntries());
+        
 
                 return "dashboard";
         }
