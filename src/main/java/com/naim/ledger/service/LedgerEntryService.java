@@ -143,4 +143,8 @@ public class LedgerEntryService {
                         customerId,
                         keyword);
     }
+
+     public long getTotalEntriesCount() {
+        return ledgerEntryRepository.count();
+    }
 }

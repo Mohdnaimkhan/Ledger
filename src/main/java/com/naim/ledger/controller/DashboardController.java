@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 
 public class DashboardController {
-        
+
         @Autowired
-        private  CustomerService customerService;
+        private CustomerService customerService;
         @Autowired
-        private  LedgerEntryService ledgerEntryService;
+        private LedgerEntryService ledgerEntryService;
 
         @GetMapping("/")
         public String dashboard(Model model) {
@@ -38,6 +38,7 @@ public class DashboardController {
                 model.addAttribute(
                                 "recentEntries",
                                 ledgerEntryService.getRecentEntries());
+                model.addAttribute("totalEntries",ledgerEntryService.getTotalEntriesCount());
                 return "dashboard";
 
         }

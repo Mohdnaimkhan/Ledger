@@ -25,4 +25,5 @@ public interface LedgerEntryRepository
         List<LedgerEntry> findByCustomer_IdAndDescriptionContainingIgnoreCase(
                         Long customerId,
                         String keyword);
+
 }
