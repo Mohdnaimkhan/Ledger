@@ -1,170 +1,170 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Customer Details</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <title>Customer Details</title>
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-  </head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <body class="bg-light">
-    <div th:replace="~{fragments/navbar}"></div>
-    <div class="container py-4">
-      <div class="row g-3">
-        <!-- Customer Info -->
-        <div class="col-lg-8">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h3 th:text="${customer.shopName}"></h3>
-              <p th:text="${customer.firstName + ' ' +customer.lastName}"></p>
-              <hr />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
 
-              <p class="mb-2">
-                <strong>Mobile:</strong>
-                <span th:text="${customer.mobile}"></span>
-              </p>
+<body class="bg-light">
+  <div th:replace="~{fragments/navbar}"></div>
+  <div class="container py-4">
+    <div class="row g-3">
+      <!-- Customer Info -->
+      <div class="col-lg-8">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h3 th:text="${customer.shopName}"></h3>
+            <p th:text="${customer.firstName + ' ' +customer.lastName}"></p>
+            <hr />
 
-              <p class="mb-0">
-                <strong>Address:</strong>
-                <span th:text="${customer.address}"></span>
-              </p>
-            </div>
+            <p class="mb-2">
+              <strong>Mobile:</strong>
+              <span th:text="${customer.mobile}"></span>
+            </p>
+
+            <p class="mb-0">
+              <strong>Address:</strong>
+              <span th:text="${customer.address}"></span>
+            </p>
           </div>
         </div>
+      </div>
 
-        <!-- Balance Card -->
-        <div class="col-lg-4">
-          <div class="card shadow-sm border-success">
-            <div class="card-body text-center">
-              <h6>Current Balance</h6>
+      <!-- Balance Card -->
+      <div class="col-lg-4">
+        <div class="card shadow-sm border-success">
+          <div class="card-body text-center">
+            <h6>Current Balance</h6>
 
-              <h2
-                th:class="${balance.signum() < 0}
+            <h1 th:class="${balance.signum() < 0}
               ? 'text-danger'
-              : 'text-success'"
-                th:text="'₹ ' + ${balance}"
-              ></h2>
+              : 'text-success'" th:text="'₹ ' + ${balance}"></h1>
 
-              <a
-                class="btn btn-primary w-100 mt-3"
-                th:href="@{/customers/{id}/entries/new(id=${customer.id})}"
-              >
-                Add Entry
-              </a>
-            </div>
+            <a class="btn btn-primary w-100 mt-3" th:href="@{/customers/{id}/entries/new(id=${customer.id})}">
+              Add Entry
+            </a>
           </div>
         </div>
       </div>
-      <div class="row g-3 align-items-stretch mb-3 mt-2">
+    </div>
 
-    <div class="col-md-3">
+
+    <div class="row g-3  mb-3 mt-2  ">
+      <div class="col-md-6">
         <div class="card shadow-sm border-info h-100">
-            <div class="card-body text-center">
-                <h6>Total Entries</h6>
-                <h3 class="text-info" th:text="${totalEntries}"></h3>
-            </div>
+          <div class="card-body text-center">
+            <h6>Total Entries</h6>
+            <h3 class="text-info" th:text="${totalEntries}"></h3>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="col-md-3">
+      <div class="col-md-6">
         <div class="card shadow-sm border-warning h-100">
-            <div class="card-body text-center">
-                <h6>Today's Entries</h6>
-                <h3 class="text-warning" th:text="${todayEntries}"></h3>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6">
-        <form method="get" class="h-100">
-            <div class="card shadow-sm h-100">
-                <div class="card-body d-flex align-items-center">
-                    <input
-                        type="text"
-                        name="keyword"
-                        class="form-control"
-                        placeholder="Search entry..."
-                    />
-                </div>
-            </div>
-        </form>
-    </div>
-
-</div>
-
-      <!-- Entries -->
-
-      <div class="card shadow-sm mt-4">
-        <div class="card-header">Ledger Entries</div>
-
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-hover">
-              <thead class="table-dark">
-                <tr>
-                  <th>Slip No.</th>
-                  <th>Date</th>
-                  <th>Type</th>
-                  <th>Amount</th>
-                  <th>Description</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr th:each="entry : ${entries}">
-                  <td th:text="${entry.slip}"></td>
-
-                  <td th:text="${entry.entryDate}"></td>
-
-                  <td>
-                    <span
-                      th:if="${entry.type.name() == 'GIVEN'}"
-                      class="badge bg-danger"
-                    >
-                      GIVEN
-                    </span>
-
-                    <span
-                      th:if="${entry.type.name() == 'RECEIVED'}"
-                      class="badge bg-success"
-                    >
-                      RECEIVED
-                    </span>
-                  </td>
-
-                  <td th:text="${entry.amount}"></td>
-
-                  <td th:text="${entry.description}"></td>
-                  <td>
-                    <a
-                      class="btn btn-warning btn-sm"
-                      th:href="@{/customers/{customerId}/entries/edit/{entryId}
-       (customerId=${customer.id},entryId=${entry.id})}"
-                    >
-                      Edit
-                    </a>
-
-                    <a
-                      class="btn btn-danger btn-sm"
-                      th:href="@{/customers/{customerId}/entries/delete/{entryId}
-       (customerId=${customer.id},entryId=${entry.id})}"
-                      onclick="return confirm('Delete Entry ?');"
-                    >
-                      Delete
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="card-body text-center">
+            <h6>Today's Entries</h6>
+            <h3 class="text-warning" th:text="${todayEntries}"></h3>
           </div>
         </div>
       </div>
     </div>
-    
-  </body>
+    <div class="col">
+      <form method="get" class="h-100">
+        <div class="card shadow-sm h-100">
+          <div class="card-body d-flex align-items-center">
+            <input type="text" id="entrySearch" class="form-control" placeholder="Search by note, amount, date...">
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Entries -->
+
+    <div class="card shadow-sm mt-4">
+      <div class="card-header fs-3 bg-info text-light ">Ledger Entries</div>
+
+      <div class="card-body">
+        <div id="entryNotFound" class="alert alert-warning text-center mt-2" style="display:none;">
+          No entry found 🔍
+        </div>
+        <table class="table table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th>Slip No.</th>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Description</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="entryTable">
+            <tr th:each="entry : ${entries}">
+              <td th:text="${entry.slip}"></td>
+
+              <td th:text="${entry.entryDate}"></td>
+
+              <td>
+                <span th:if="${entry.type.name() == 'GIVEN'}" class="badge bg-danger">
+                  GIVEN
+                </span>
+
+                <span th:if="${entry.type.name() == 'RECEIVED'}" class="badge bg-success">
+                  RECEIVED
+                </span>
+              </td>
+
+              <td th:text="${entry.amount}"></td>
+
+              <td th:text="${entry.description}"></td>
+              <td>
+                <a class="btn btn-warning btn-sm" th:href="@{/customers/{customerId}/entries/edit/{entryId}
+       (customerId=${customer.id},entryId=${entry.id})}">
+                  Edit
+                </a>
+
+                <a class="btn btn-danger btn-sm" th:href="@{/customers/{customerId}/entries/delete/{entryId}
+       (customerId=${customer.id},entryId=${entry.id})}" onclick="return confirm('Delete Entry ?');">
+                  Delete
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  </div>
+  <script>
+    document.getElementById("entrySearch")
+      .addEventListener("keyup", function () {
+
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#entryTable tr");
+
+        let visibleRows = 0;
+
+        rows.forEach(function (row) {
+
+          let text = row.innerText.toLowerCase();
+
+          if (text.includes(filter)) {
+            row.style.display = "";
+            visibleRows++;
+          } else {
+            row.style.display = "none";
+          }
+        });
+
+        document.getElementById("entryNotFound").style.display =
+          visibleRows === 0 ? "block" : "none";
+      });
+  </script>
+</body>
+
 </html>

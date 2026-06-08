@@ -1,12 +1,12 @@
 package com.naim.ledger.controller;
 
-import com.naim.ledger.service.CustomerService;
-import com.naim.ledger.service.LedgerEntryService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.naim.ledger.service.CustomerService;
+import com.naim.ledger.service.LedgerEntryService;
 
 @Controller
 
@@ -38,7 +38,15 @@ public class DashboardController {
                 model.addAttribute(
                                 "recentEntries",
                                 ledgerEntryService.getRecentEntries());
-                model.addAttribute("totalEntries",ledgerEntryService.getTotalEntriesCount());
+                model.addAttribute("totalEntries",
+                                ledgerEntryService.getTotalEntriesCount());
+                model.addAttribute(
+                                "todayGiven",
+                                ledgerEntryService.getTodayGiven());
+
+                model.addAttribute(
+                                "todayReceived",
+                                ledgerEntryService.getTodayReceived());
                 return "dashboard";
 
         }

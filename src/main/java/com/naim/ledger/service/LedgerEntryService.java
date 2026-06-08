@@ -1,17 +1,17 @@
 package com.naim.ledger.service;
 
-import com.naim.ledger.dto.*;
-import com.naim.ledger.entity.LedgerEntry;
-import com.naim.ledger.others.EntryType;
-import com.naim.ledger.repo.LedgerEntryRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.naim.ledger.dto.EntryView;
+import com.naim.ledger.entity.LedgerEntry;
+import com.naim.ledger.others.EntryType;
+import com.naim.ledger.repo.LedgerEntryRepository;
 
 @Service
 
@@ -144,7 +144,15 @@ public class LedgerEntryService {
                         keyword);
     }
 
-     public long getTotalEntriesCount() {
+    public long getTotalEntriesCount() {
         return ledgerEntryRepository.count();
+    }
+
+    public BigDecimal getTodayGiven() {
+        return ledgerEntryRepository.getTodayGiven(LocalDate.now());
+    }
+
+    public BigDecimal getTodayReceived() {
+        return ledgerEntryRepository.getTodayReceived(LocalDate.now());
     }
 }

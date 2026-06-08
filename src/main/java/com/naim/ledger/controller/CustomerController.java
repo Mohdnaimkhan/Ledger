@@ -1,5 +1,7 @@
 package com.naim.ledger.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +27,17 @@ public class CustomerController {
         private LedgerEntryService ledgerEntryService;
 
         @GetMapping
-        public String list(Model model) {
+        public String listCustomers(Model model) {
 
-                model.addAttribute("customers", customerService.getAllCustomers());
+                List<Customer> customers = customerService.getAllCustomers();
+
+                for (Customer customer : customers) {
+
+                        customer.setBalance(
+                                        customerService.getBalance(customer.getId()));
+                }
+
+                model.addAttribute("customers", customers);
 
                 return "customer/list";
         }

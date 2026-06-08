@@ -66,60 +66,89 @@
             </div>
           </div>
         </div>
-        <div>
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">Total Entries</h5>
-              <h2 class="text-success" th:text="${totalEntries}">0</h2>
+
+
+        <div class="col-md-3">
+          <div class="card border-danger shadow-sm h-100">
+            <div class="card-body text-center">
+              <h6>Today's Given</h6>
+              <h3 class="text-danger" th:text="${todayGiven}"></h3>
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div class="mt-4">
-      <a class="btn btn-primary" th:href="@{/customers}"> View Customers </a>
-    </div>
-
-    <div class="card shadow-sm mt-4">
-      <div class="card-header">Recent Transactions</div>
-
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-hover">
-            <thead class="table-dark">
-              <tr>
-                <th>Date</th>
-                <th>Customer</th>
-                <th>Type</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr th:each="entry : ${recentEntries}">
-                <td th:text="${entry.entryDate}"></td>
-
-                <td th:text="${entry.customer.firstName}"></td>
-
-                <td>
-                  <span th:if="${entry.type.name() == 'GIVEN'}" class="badge bg-danger">
-                    GIVEN
-                  </span>
-
-                  <span th:if="${entry.type.name() == 'RECEIVED'}" class="badge bg-success">
-                    RECEIVED
-                  </span>
-                </td>
-
-                <td th:text="${entry.amount}"></td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="col-md-3">
+          <div class="card border-success shadow-sm h-100">
+            <div class="card-body text-center">
+              <h6>Today's Received</h6>
+              <h3 class="text-success" th:text="${todayReceived}"></h3>
+            </div>
+          </div>
         </div>
+
+        <div class="col-md-3">
+          <div class="card border-primary shadow-sm h-100">
+            <div class="card-body text-center">
+              <h6>Total Transactions</h6>
+              <h3 class="text-primary" th:text="${totalEntries}"></h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card border-success shadow-sm h-100">
+            <div class="card-body text-center">
+              <h6>Today's Received</h6>
+              <h3 class="text-success" th:text="${todayReceived}"></h3>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-4">
+        <a class="btn btn-primary" th:href="@{/customers}"> View Customers </a>
+      </div>
+
+      <div class="card shadow-sm mt-4">
+        <h2 class="card-header bg-info text-light">Recent Transactions</h2>
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead class="table-dark">
+                <tr>
+                  <th>Date</th>
+                  <th>Customer</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr th:each="entry : ${recentEntries}">
+                  <td th:text="${entry.entryDate}"></td>
+
+                  <td th:text="${entry.customer.firstName}"></td>
+
+                  <td>
+                    <span th:if="${entry.type.name() == 'GIVEN'}" class="badge bg-danger">
+                      GIVEN
+                    </span>
+
+                    <span th:if="${entry.type.name() == 'RECEIVED'}" class="badge bg-success">
+                      RECEIVED
+                    </span>
+                  </td>
+
+                  <td th:text="${entry.amount}"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </div>
-  </div>
 </body>
 
 </html>

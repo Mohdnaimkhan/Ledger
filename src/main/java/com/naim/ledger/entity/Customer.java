@@ -3,6 +3,7 @@ package com.naim.ledger.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -30,6 +31,8 @@ public class Customer {
     private String address;
 
     private LocalDateTime createdAt;
+    @Transient
+    private BigDecimal balance;
 
     @PrePersist
     public void prePersist() {
