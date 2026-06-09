@@ -48,7 +48,7 @@
                   <label class="form-label"> Date </label>
 
                   <input type="date" class="form-control"
-                    th:max="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}" name="entryDate"
+                    th:max="${#temporals.format(#temporals.createNow(), 'dd/MM/yyyy')}" name="entryDate"
                     th:field="*{entryDate}" required placeholder="DD/MM/YYYY" />
                 </div>
 

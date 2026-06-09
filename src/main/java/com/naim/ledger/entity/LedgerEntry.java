@@ -15,9 +15,10 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.naim.ledger.others.EntryType;
 
@@ -36,6 +37,7 @@ public class LedgerEntry {
 
     private long slip;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate entryDate;
 
     @Enumerated(EnumType.STRING)
