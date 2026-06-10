@@ -1,6 +1,9 @@
-<<<<<<< HEAD
-# ledger
-This is a ledger app. That manage the ledger work of a businee.
-=======
-Ledger App 
->>>>>>> 0d31445 (Create README.md)
+# Ledger App
+
+
+## About the app
+- This app is manage the ledger every day task
+- Easy and Simple
+
+### About the Author 
+Author Name - Mohd Naim Khan

@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -38,4 +39,7 @@ public class Customer {
     public void prePersist() {
         createdAt = LocalDateTime.now();
     }
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LedgerEntry> entries;
 }
